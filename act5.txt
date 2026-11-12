@@ -1,0 +1,122 @@
+# Parte A — Opción 1: Tuplas
+
+def sumar_tupla(datos):
+    total = 0
+    for numero in datos:
+        total += numero
+    return total
+
+def seccion_tuplas():
+    numeros = (10, 20, 30, 40, 50)
+    print("Tupla original:", numeros)
+    print("Tercer elemento:", numeros[2])
+    numero1 = int(input("Ingresa el primer número para agregar: "))
+    numero2 = int(input("Ingresa el segundo número para agregar: "))
+    nueva_tupla = numeros + (numero1, numero2)
+    print("Nueva tupla:", nueva_tupla)
+    lista_ordenada = list(nueva_tupla)
+    lista_ordenada.sort()
+    print("Lista ordenada:", lista_ordenada)
+    print("Suma de la nueva tupla:", sumar_tupla(nueva_tupla))
+    
+    # Parte B — Opción 2: Diccionarios
+
+def buscar_telefono(contactos, nombre):
+    return contactos.get(nombre)
+
+def seccion_diccionarios():
+    contactos = {
+        "Ana": "442-111-1111",
+        "Luis": "442-222-2222",
+        "Carlos": "442-333-3333"
+    }
+    nombre_nuevo = input("Nombre del nuevo contacto: ")
+    telefono_nuevo = input("Teléfono del nuevo contacto: ")
+    contactos[nombre_nuevo] = telefono_nuevo
+    print("Nombres registrados:")
+    for nombre in contactos.keys():
+        print(nombre)
+    nombre_buscar = input("¿Qué nombre quieres buscar?: ")
+    telefono = buscar_telefono(contactos, nombre_buscar)
+    if telefono is not None:
+        print("Teléfono de", nombre_buscar + ":", telefono)
+    else:
+        print(nombre_buscar, "no está en tus contactos")
+        
+        # Parte C — Opción 3: Excepciones
+
+def seccion_excepciones():
+    try:
+        numero1 = int(input("Ingresa el primer número entero: "))
+        numero2 = int(input("Ingresa el segundo número entero: "))
+        print("Suma:", numero1 + numero2)
+        print("División:", numero1 / numero2)
+    except ValueError:
+        print("Entrada inválida: escribe números enteros y no dejes el valor vacío.")
+    except ZeroDivisionError:
+        print("No se puede dividir entre cero. Intenta con otro divisor.")
+        
+        # Parte D — Opción 4: Strings
+
+def contar_palabras(texto):
+    return len(texto.split())
+
+def seccion_strings():
+    mensaje = "La música une a las personas"
+    print("Mensaje:", mensaje)
+    print("Longitud del mensaje:", len(mensaje))
+    print("En mayúsculas:", mensaje.upper())
+    mensaje_reemplazado = mensaje.replace("música", "creatividad")
+    print("Mensaje reemplazado:", mensaje_reemplazado)
+    print("Número de palabras:", contar_palabras(mensaje))
+    
+    # Parte E y F — Menú modular, ejecutado con las 10 pruebas
+
+import builtins
+
+def menu():
+    while True:
+        print("\n===== MENÚ PRINCIPAL =====")
+        print("1) Tuplas")
+        print("2) Diccionarios")
+        print("3) Excepciones")
+        print("4) Strings")
+        print("5) Salir")
+        opcion = input("Elige una opción: ")
+        if opcion == "1":
+            seccion_tuplas()
+        elif opcion == "2":
+            seccion_diccionarios()
+        elif opcion == "3":
+            seccion_excepciones()
+        elif opcion == "4":
+            seccion_strings()
+        elif opcion == "5":
+            print("Programa terminado. ¡Hasta luego!")
+            break
+        else:
+            print("Opción inválida")
+
+# Entradas de prueba automatizadas para documentar una ejecución completa.
+# En uso normal, menu() recibe las respuestas del teclado.
+entradas_prueba = iter([
+    "1", "12", "3",
+    "2", "Alex", "555-1234", "Ana",
+    "2", "Alex", "555-1234", "Juan",
+    "3", "8", "2",
+    "3", "abc",
+    "3", "",
+    "3", "8", "0",
+    "4", "9", "5"
+])
+input_original = builtins.input
+def input_de_prueba(prompt=""):
+    print(prompt, end="")
+    respuesta = next(entradas_prueba)
+    print(respuesta)
+    return respuesta
+builtins.input = input_de_prueba
+try:
+    menu()
+finally:
+    builtins.input = input_original
